@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Header from './components/header/Header';
 import InputReadOnly from './components/InputReadOnly/InputReadOnly';
+import { calculateSalary } from './salaryCalculator';
+import { formatNumber } from './components/helpers/formatter';
 
 export default class App extends Component {
   constructor() {
@@ -23,20 +25,48 @@ export default class App extends Component {
     this.setState({
       fullSalary: newValue,
     });
+    console.log(newValue);
+    const {
+      discountINSS,
+      discountIRRF,
+      totalDiscount,
+      netSalary,
+    } = calculateSalary(newValue);
+
+    this.setState({ discountINSS, discountIRRF, totalDiscount, netSalary });
+    console.log(this.state);
   };
 
   render() {
-    const { fullSalary } = this.state;
+    const {
+      fullSalary,
+      discountINSS,
+      discountIRRF,
+      totalDiscount,
+      netSalary,
+    } = this.state;
 
     return (
       <div className="container">
         <h1 style={styles.centeredTitle}>Salário líquido</h1>
         <Header salary={fullSalary} onChangeFilter={this.handleChangeFilter} />
-        <div class="row">
-          <InputReadOnly />
-          <InputReadOnly />
-          <InputReadOnly />
-          <InputReadOnly />
+        <div className="row">
+          <InputReadOnly
+            value={formatNumber(discountINSS)}
+            label={'Desconto INSS'}
+          />
+          <InputReadOnly
+            value={formatNumber(discountIRRF)}
+            label={'Desconto IRRF'}
+          />
+          <InputReadOnly
+            value={formatNumber(netSalary)}
+            label={'Salário líquido'}
+          />
+          <InputReadOnly
+            value={formatNumber(totalDiscount)}
+            label={'Total desconto'}
+          />
         </div>
       </div>
     );
