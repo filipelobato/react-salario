@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import Header from './components/header/Header';
 import InputReadOnly from './components/InputReadOnly/InputReadOnly';
+import ProportionBar from './components/ProportionBar';
 import { calculateSalary } from './salaryCalculator';
+import { formatPercentage } from './components/helpers/formatter';
 
 const COLOR_INSS = '#e67e22';
 const COLOR_IRPF = '#c0392b';
@@ -40,6 +42,7 @@ export default class App extends Component {
       percentagediscountIRPF,
       baseIRPF,
       baseINSS,
+      percentageNetSalary,
     } = calculateSalary(newValue);
 
     this.setState({
@@ -51,11 +54,17 @@ export default class App extends Component {
       percentagediscountIRPF,
       baseIRPF,
       baseINSS,
+      percentageNetSalary,
     });
   };
 
   render() {
-    const { fullSalary, totalDiscount, netSalary } = this.state;
+    const {
+      fullSalary,
+      totalDiscount,
+      netSalary,
+      percentageNetSalary,
+    } = this.state;
     const { discountINSS, baseIRPF, baseINSS, discountIRPF } = this.state;
     const { percentageDiscountINSS, percentagediscountIRPF } = this.state;
 
@@ -87,9 +96,16 @@ export default class App extends Component {
           <InputReadOnly
             value={netSalary}
             label={'Salário líquido'}
+            percentage={percentageNetSalary}
             color={COLOR_NET_SALARY}
           />
         </div>
+
+        <ProportionBar
+          inss={formatPercentage(percentageDiscountINSS)}
+          irpf={formatPercentage(percentagediscountIRPF)}
+          netSalary={formatPercentage(percentageNetSalary)}
+        />
       </div>
     );
   }
