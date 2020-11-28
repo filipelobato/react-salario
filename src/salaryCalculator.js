@@ -26,12 +26,11 @@ const calculateDiscountINSS = (baseINSS) => {
   const aliquotINSS = aliquotsINSS.find((rate) => {
     return rate.minValue <= baseINSS && baseINSS <= rate.maxValue;
   });
-  console.log(aliquotINSS);
 
-  return +(baseINSS * aliquotINSS.rate - aliquotINSS.deduction).toFixed(2);
+  return +(baseINSS * aliquotINSS.rate - aliquotINSS.deduction);
 };
 
-const calculateDiscountIRRF = (salaryPaidINSS) => {
+const calculateDiscountIRPF = (salaryPaidINSS) => {
   if (salaryPaidINSS > 6101.07) {
     return +(salaryPaidINSS * 0.275 - 869.36).toFixed(2);
   }
@@ -48,29 +47,35 @@ const calculateDiscountIRRF = (salaryPaidINSS) => {
 };
 
 const calculateSalary = (fullSalary = 0) => {
-  console.log(fullSalary);
+  // INSS
   const baseINSS = fullSalary;
-
   const discountINSS = calculateDiscountINSS(baseINSS);
-  const salaryPaidINSS = fullSalary - discountINSS;
+  const salaryPaidINSS = +(baseINSS - discountINSS);
   // prettier-ignore
-  const percentageDiscountINSS = parseFloat((discountINSS / baseINSS).toFixed(2));
+  const percentageDiscountINSS = (discountINSS / baseINSS);
 
-  const discountIRRF = calculateDiscountIRRF(salaryPaidINSS);
-  const netSalary = +(salaryPaidINSS - discountIRRF).toFixed(2);
-  const totalDiscount = discountINSS + discountIRRF;
+  // IRRF
+  const discountIRPF = calculateDiscountIRPF(salaryPaidINSS);
   // prettier-ignore
-  const percentageNetSalary = parseFloat((netSalary / baseINSS).toFixed(2));
+  const percentagediscountIRPF = (discountIRPF / salaryPaidINSS);
+
+  // Total
+  const netSalary = salaryPaidINSS - discountIRPF;
+  const totalDiscount = discountINSS + discountIRPF;
+  // prettier-ignore
+  const percentageNetSalary = (netSalary / baseINSS);
 
   return {
     fullSalary: baseINSS,
+    baseINSS,
     discountINSS,
-    salaryPaidINSS,
-    discountIRRF,
+    baseIRPF: salaryPaidINSS,
+    discountIRPF,
     totalDiscount,
     netSalary,
     percentageDiscountINSS,
     percentageNetSalary,
+    percentagediscountIRPF,
   };
 };
 

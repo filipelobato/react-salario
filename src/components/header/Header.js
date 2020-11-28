@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 
 export default class Salario extends Component {
   handleInputChange = (event) => {
-    event.target.value = event.target.value.replace('-', '');
-    event.target.value = event.target.value.replace('+', '');
     const newValue = event.target.value;
-    console.log(`Valor new value => ${newValue}`);
 
     this.props.onChangeFilter(newValue);
   };
@@ -13,6 +10,7 @@ export default class Salario extends Component {
   render() {
     const { salary } = this.props;
     const { fullSalary } = salary;
+
     return (
       <div className="row">
         <div className="input-field col s12">

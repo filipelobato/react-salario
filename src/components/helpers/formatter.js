@@ -1,13 +1,11 @@
 const formatterCurrency = Intl.NumberFormat('pt-BR', {
-  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
   style: 'currency',
   currency: 'BRL',
 });
 
 const formatterNumber = Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2,
-  style: 'currency',
-  currency: 'BRL',
 });
 
 const formatCurrency = (number) => {
@@ -18,4 +16,9 @@ const formatNumber = (number) => {
   return formatterNumber.format(number);
 };
 
-export { formatCurrency, formatNumber };
+const formatPercentage = (number) => {
+  const numberInPercentage = +(number * 100).toFixed(2);
+  return `${numberInPercentage}%`;
+};
+
+export { formatCurrency, formatNumber, formatPercentage };
