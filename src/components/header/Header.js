@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 
 export default class Salario extends Component {
   handleInputChange = (event) => {
+    event.target.value = event.target.value.replace('-', '');
+    event.target.value = event.target.value.replace('+', '');
     const newValue = event.target.value;
     console.log(`Valor new value => ${newValue}`);
 
     this.props.onChangeFilter(newValue);
-  };
-
-  handleInputKeyUp = (event) => {
-    event.target.value = event.target.value.replace('-', '');
-    event.target.value = event.target.value.replace('+', '');
   };
 
   render() {
@@ -21,12 +18,11 @@ export default class Salario extends Component {
         <div className="input-field col s12">
           <input
             autoFocus
-            placeholder="1000"
+            placeholder="999,99"
             id="net-salary"
             type="number"
             value={fullSalary}
             onChange={this.handleInputChange}
-            onKeyUp={this.handleInputKeyUp}
             min="0"
             step="100"
           />
