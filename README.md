@@ -1,3 +1,6 @@
+Resumo: projeto feito para calcular os descontos do INSS, do Imposto de Renda e fornecer percentuais e o salário líquido, baseado no salário bruto fornecido pelo usuário.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
